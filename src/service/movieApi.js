@@ -21,3 +21,20 @@ export const getFilteredMovies = async query => {
   const { data } = await instance.get(`/search/movie?query=${query}`);
   return data;
 };
+
+export const getMovieInfo = async id => {
+  const { data } = await instance.get(`/movie/${id}`);
+  return data;
+};
+
+export const getMovieCast = async id => {
+  const { data } = await instance.get(`/movie/${id}/credits?language=en-US`);
+  return data;
+};
+
+export const getMovieReviews = async id => {
+  const { data } = await instance.get(
+    `/movie/${id}/reviews?language=en-US&page=1`
+  );
+  return data;
+};

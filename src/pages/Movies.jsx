@@ -10,7 +10,9 @@ const Movies = () => {
 
   useEffect(() => {
     const query = searchParams.get('query');
-    if (!query) return;
+    if (!query) {
+      return;
+    }
 
     getFilteredMovies(query).then(({ results }) => setMovies(results));
   }, [searchParams]);
