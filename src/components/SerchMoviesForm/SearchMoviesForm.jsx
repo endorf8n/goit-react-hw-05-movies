@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { Input, SearchBtn, StyledForm } from './searchMoviesForm.styled';
 
 export const SearchMoviesForm = ({ onSubmit }) => {
   const [value, setValue] = useState('');
@@ -13,8 +15,8 @@ export const SearchMoviesForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
+    <StyledForm onSubmit={handleSubmit}>
+      <Input
         type="text"
         name="search"
         value={value}
@@ -23,7 +25,11 @@ export const SearchMoviesForm = ({ onSubmit }) => {
         required
         autoFocus
       />
-      <button type="submit">Search</button>
-    </form>
+      <SearchBtn type="submit">Search</SearchBtn>
+    </StyledForm>
   );
+};
+
+SearchMoviesForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };

@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import { Header, PageList, StyledLink } from './layout.styled';
 
 const routes = [
   { path: '/', text: 'Home' },
@@ -8,17 +9,17 @@ const routes = [
 export const Layout = () => {
   return (
     <>
-      <header>
+      <Header>
         <nav>
-          <ul>
+          <PageList>
             {routes.map(route => (
               <li key={route.path}>
-                <NavLink to={route.path}>{route.text}</NavLink>
+                <StyledLink to={route.path}>{route.text}</StyledLink>
               </li>
             ))}
-          </ul>
+          </PageList>
         </nav>
-      </header>
+      </Header>
       <Outlet />
     </>
   );

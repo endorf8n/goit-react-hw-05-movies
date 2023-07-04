@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieInfo } from 'service/movieApi';
+import {
+  AddInfoItem,
+  AddInfoText,
+  LinkGoBack,
+  MovieDetailsStyled,
+  MovieTitle,
+  MoviesInfoText,
+  Wrapper,
+} from 'styles/movieDetails.styled';
 
 const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
@@ -17,35 +26,35 @@ const MovieDetails = () => {
     movieInfo;
   return (
     <div>
-      <Link to={location?.state?.from || '/'}>Go back</Link>
-      <div>
+      <LinkGoBack to={location?.state?.from || '/'}>Go back</LinkGoBack>
+      <Wrapper>
         <img
           src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
           alt="original_title"
           width="200"
         />
 
-        <div>
-          <h2>{original_title}</h2>
-          <p>{vote_average}</p>
+        <MovieDetailsStyled>
+          <MovieTitle>{original_title}</MovieTitle>
+          <MoviesInfoText>Users vote: {vote_average}</MoviesInfoText>
           <h3>Overview</h3>
-          <p>{overview}</p>
+          <MoviesInfoText>{overview}</MoviesInfoText>
           <h3>Genres</h3>
-          <p>
+          <MoviesInfoText>
             {genres.map(({ name, id }) => (
               <span key={id}>{name} </span>
             ))}
-          </p>
-        </div>
-      </div>
-      <h3>Additional information</h3>
+          </MoviesInfoText>
+        </MovieDetailsStyled>
+      </Wrapper>
+      <AddInfoText>Additional information</AddInfoText>
       <ul>
-        <li>
+        <AddInfoItem>
           <Link to="cast">Cast</Link>
-        </li>
-        <li>
+        </AddInfoItem>
+        <AddInfoItem>
           <Link to="reviews">Reviews</Link>
-        </li>
+        </AddInfoItem>
       </ul>
       <Outlet />
     </div>

@@ -33,6 +33,8 @@ button {
     background-color: transparent;
     cursor: pointer;
   }
-
+a {
+  text-decoration: none;
+}
 
   `;
