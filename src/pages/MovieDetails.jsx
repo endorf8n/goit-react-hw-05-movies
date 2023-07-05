@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { formatDateToYear } from 'service/formatDate';
 import { getMovieInfo } from 'service/movieApi';
 import {
   AddInfoItem,
@@ -22,8 +23,23 @@ const MovieDetails = () => {
 
   if (!movieInfo) return;
 
-  const { poster_path, original_title, vote_average, overview, genres } =
-    movieInfo;
+  const {
+    poster_path,
+    original_title,
+    release_date,
+    vote_average,
+    overview,
+    genres,
+  } = movieInfo;
+
+  const releaseDateToYear = formatDateToYear(release_date);
+
+  const userScorePercentage = voteAverage => {
+    return Math.round(Number(voteAverage) * 10);
+  };
+
+  const userScore = userScorePercentage(vote_average);
+
   return (
     <div>
       <LinkGoBack to={location?.state?.from || '/'}>Go back</LinkGoBack>
@@ -35,8 +51,10 @@ const MovieDetails = () => {
         />
 
         <MovieDetailsStyled>
-          <MovieTitle>{original_title}</MovieTitle>
-          <MoviesInfoText>Users vote: {vote_average}</MoviesInfoText>
+          <MovieTitle>
+            {original_title} ({releaseDateToYear})
+          </MovieTitle>
+          <MoviesInfoText>Users score: {userScore} %</MoviesInfoText>
           <h3>Overview</h3>
           <MoviesInfoText>{overview}</MoviesInfoText>
           <h3>Genres</h3>
