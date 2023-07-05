@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+import { ColorRing } from 'react-loader-spinner';
 import { formatDateToYear } from 'service/formatDate';
 import { getMovieInfo } from 'service/movieApi';
 import {
@@ -11,6 +12,7 @@ import {
   MoviesInfoText,
   Wrapper,
 } from 'styles/movieDetails.styled';
+import posterDefault from './../../src/service/images/NoPosterImage.jpg';
 
 const MovieDetails = () => {
   const [movieInfo, setMovieInfo] = useState(null);
@@ -45,7 +47,11 @@ const MovieDetails = () => {
       <LinkGoBack to={location?.state?.from || '/'}>Go back</LinkGoBack>
       <Wrapper>
         <img
-          src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+          src={
+            poster_path
+              ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+              : `${posterDefault}`
+          }
           alt="original_title"
           width="200"
         />
@@ -74,7 +80,21 @@ const MovieDetails = () => {
           <Link to="reviews">Reviews</Link>
         </AddInfoItem>
       </ul>
-      <Outlet />
+      <Suspense
+        fallback={
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
+        }
+      >
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

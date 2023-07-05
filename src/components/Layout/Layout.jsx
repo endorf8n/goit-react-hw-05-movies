@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom';
+import { ColorRing } from 'react-loader-spinner';
 import { Header, PageList, StyledLink } from './layout.styled';
+import { Suspense } from 'react';
 
 const routes = [
   { path: '/', text: 'Home' },
@@ -20,7 +22,21 @@ export const Layout = () => {
           </PageList>
         </nav>
       </Header>
-      <Outlet />
+      <Suspense
+        fallback={
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
+        }
+      >
+        <Outlet />
+      </Suspense>
     </>
   );
 };

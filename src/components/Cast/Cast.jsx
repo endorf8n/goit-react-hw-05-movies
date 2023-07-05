@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from 'service/movieApi';
 import { CastCharacter, CastList, CastListItem, CastName } from './cast.styled';
+import noProfilePhoto from './../../service/images/NoProfilePicture.jpg';
 
 const Cast = () => {
   const [movieCast, setMovieCast] = useState();
@@ -20,7 +21,11 @@ const Cast = () => {
         {movieCast.map(({ id, profile_path, name, character }) => (
           <CastListItem key={id}>
             <img
-              src={`https://image.tmdb.org/t/p/w500/${profile_path}`}
+              src={
+                profile_path
+                  ? `https://image.tmdb.org/t/p/w500/${profile_path}`
+                  : `${noProfilePhoto}`
+              }
               alt={name}
               width="80"
             />
